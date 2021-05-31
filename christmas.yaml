@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: christmas-countdown-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: christmas-countdown
+  template:
+    metadata:
+      labels:
+        app: christmas-countdown
+    spec:
+      imagePullSecrets:
+        - name: ecr-docker-login
+      containers:
+      - name: christmasbot
+        image: 688621974378.dkr.ecr.eu-west-2.amazonaws.com/xmasbot:9c8b849b2a326a10b256a791ea88960183ac1cf0
+        env:
+          - name: TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: christmasbot-secrets
+                key: TOKEN
+        resources:
+          limits:
+            memory: "64Mi"
+            cpu: "100m"
+
