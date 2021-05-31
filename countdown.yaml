@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: countdownbot
+spec:
+  selector:
+    matchLabels:
+      app: countdownbot
+  template:
+    metadata:
+      labels:
+        app: countdownbot
+    spec:
+      imagePullSecrets:
+        - name: ecr-docker-login
+      containers:
+      - name: countdownbot
+        image: 688621974378.dkr.ecr.eu-west-2.amazonaws.com/countdown-bot:ff087cb53d0bde1e7c499ff79000c40bfedc7dd3
+        env: 
+          - name: TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: countdownbot-secrets
+                key: TOKEN
+          - name: COMMAND
+            valueFrom:
+              secretKeyRef:
+                name: countdownbot-secrets
+                key: COMMAND            
+        resources:
+          limits:
+            memory: "64Mi"
+            cpu: "100m"
+
