@@ -1,0 +1,9 @@
+repositories:
+  - name: stable
+    url: https://charts.helm.sh/stable
+  - name: ingress-nginx
+    url: https://kubernetes.github.io/ingress-nginx
+releases:
+  - name: nginx-ingress
+    namespace: default
+    chart: ingress-nginx/ingress-nginx
